@@ -1,0 +1,40 @@
+{
+    "EECE 102": [
+        "EGPP 101"
+    ],
+    "EECE 160": [
+        "EECE 102"
+    ],
+    "EECE 203": [
+        "PHYS 014",
+        "EECE 160"
+    ],
+    "EECE 212": [
+        "EECE 160"
+    ],
+    "EECE 305": [
+        "MATH 158",
+        "PHYS 014"
+    ],
+    "EECE 309": [
+        "EECE 203"
+    ],
+    "EECE 331": [
+        "MATH 158"
+    ],
+    "EECE 333": [
+        "EECE 331"
+    ],
+    "EECE 401": [
+        "EECE 333"
+    ],
+    "EECE 406": [
+        "EECE 212"
+    ],
+    "MATH 157": [
+        "MATH 156"
+    ],
+    "MATH 158": [
+        "MATH 157"
+    ]
+}
