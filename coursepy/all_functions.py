@@ -1,6 +1,12 @@
 from collections import deque
 import json
-import time
+from pulp import *
+import sys, os
+
+oneUpPath = os.path.abspath('../')
+file = os.path.join(oneUpPath, 'send_in.txt')
+# file='send_in.txt'
+sys.stdin = open(file, 'r')
 
 class Graph:
 
@@ -47,9 +53,14 @@ class Graph:
                         self.indegree_dict[courses] -= 1
                     del self.indegree_dict[k]
             temp_dict = self.indegree_dict.copy()
-        if len(sorted_courses) == total_num_courses:
-            return sorted_courses
-        raise("Cycle in the Graph!")
+        if not len(sorted_courses) == total_num_courses:
+            raise("Cycle in the Graph!")
+        self.sorted_courses = sorted_courses
+        return sorted_courses
+
+
+
+
         
 
 class UserInteraction:
@@ -72,6 +83,7 @@ class UserInteraction:
         print("So, we'd need to know what your degree requirements are in order to proceed.")
         print("Input the filepath to your course list (JSON File): ", end = "")
         path = input()
+        print(path)
         self.course_reqs = self.json_read(path)
         print()
     
@@ -155,11 +167,60 @@ class UserInteraction:
         
         for k, v in self.courses_want_to_take.items():
             self.g.add_vertex((k, v[1]))
+    
+        
+    def recommend_schedule(self):
+        
+        def generate_schedule(sem, credits_left, already_taken):
+            all_sems = []
+            current_credit = 0
+            current_semester = []
+            for course, credit in self.g.sorted_courses:
+                if course in already_taken:
+                    continue
+                
+                if current_credit + credit > 21:
+                    all_sems.append(current_semester)
+                    current_semester = []
+                    current_credit  = 0
+                else:
+                    already_taken.add(course)
+                    current_semester.append((course,credit))
+                    current_credit += credit
+            all_sems.append(current_semester)
+            return all_sems
+        
+
+
+
+        
+        schedule = generate_schedule(self.sems_remaining, self.credits, set(list(self.already_taken)))
+            
+
+        for i in range(1, len(schedule) + 1):
+            print(f"Schedule for Sem {i}: ")
+            print("Course", '\t', "Credit")
+            sch = schedule[i-1]
+            for course, credit in sch:
+                print(course, '\t', credit)
+            print()
+            print()
+
+        if len(schedule) > self.sems_remaining:
+            print(f"Sorry, you can't cover these courses in {self.sems_remaining} semesters")
+
+
+
+
+
+
+
+
+        
 
 if __name__ == "__main__":
     user = UserInteraction(4, "Computer Science", 120)
     user.give_info()
-    time.sleep(5)
     user.ask_required_courses()
     user.ask_nontech_electives()
     user.ask_tech_electives()
@@ -167,6 +228,6 @@ if __name__ == "__main__":
     user.ask_courses_want_to_take()
     user.course_relationship()
     user.makeGraph()
-    print(user.g.adjacency_dict)
-    print(user.g.doTopologicalSort())
+    user.g.doTopologicalSort()
+    user.recommend_schedule()
 

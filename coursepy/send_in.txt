@@ -1,0 +1,7 @@
+We are thrilled to provide you any help with your course schedule. We may ask some JSON files from you.
+The format of those file must be (unless specified): 
+{Course Number: [Department, Credits]}
+Let's proceed.
+
+So, we'd need to know what your degree requirements are in order to proceed.
+Input the filepath to your course list (JSON File): 
