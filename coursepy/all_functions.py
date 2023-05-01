@@ -26,7 +26,6 @@ class Graph:
         self.indegree_dict = {}
 
         total_num_courses = len(self.adjacency_dict)
-
         for k, v in self.adjacency_dict.items():
             for course in v:
                 if course in self.indegree_dict:
@@ -38,14 +37,16 @@ class Graph:
         
         print(self.indegree_dict)
         sorted_courses = []
+        temp_dict = self.indegree_dict.copy()
         while 0 in self.indegree_dict.values():
-            for k, v in self.indegree_dict.items():
+            for k, v in temp_dict.items():
                 if v == 0:
-                    sorted_courses.append(v)
+                    sorted_courses.append(k)
                     prereq_for_courses = self.adjacency_dict[k]
                     for courses in prereq_for_courses:
                         self.indegree_dict[courses] -= 1
                     del self.indegree_dict[k]
+            temp_dict = self.indegree_dict.copy()
         if len(sorted_courses) == total_num_courses:
             return sorted_courses
         raise("Cycle in the Graph!")
