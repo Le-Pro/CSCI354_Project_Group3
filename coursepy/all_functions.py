@@ -20,7 +20,7 @@ class Graph:
         """
         self.indegree_dict = {}
         self.adjacency_dict = {}
-
+    
     def add_vertex(self, course):
         if course not in self.adjacency_dict:
             self.adjacency_dict[course] = set()
@@ -41,7 +41,6 @@ class Graph:
                     self.indegree_dict[course] = 1
             if k not in self.indegree_dict:
                 self.indegree_dict[k] = 0
-        # print(self.indegree_dict)
         sorted_courses = []
         temp_dict = self.indegree_dict.copy()
         while 0 in self.indegree_dict.values():
@@ -54,6 +53,7 @@ class Graph:
                     del self.indegree_dict[k]
             temp_dict = self.indegree_dict.copy()
         if len(sorted_courses) == total_num_courses:
+            self.sorted_courses = sorted_courses
             return sorted_courses
         raise("Cycle in the Graph!")
         
@@ -204,6 +204,39 @@ class UserInteraction:
 
         for k, v in self.courses_want_to_take.items():
             self.g.add_vertex((k, v[1]))
+    
+    def recommend_courses(self):
+        all_sems = []
+        current_semester = []
+        current_credits = 0
+
+        already_taken = set(list(self.already_taken))
+
+        for course, credit in self.g.sorted_courses:
+            if course in already_taken:
+                continue
+                
+            if current_credits + credit > 21:
+                all_sems.append(current_semester)
+                current_semester = [(course, credit)]
+                current_credits = credit
+                already_taken.add(course)
+            else:
+                current_semester.append((course, credit))
+                current_credits += credit
+
+
+        all_sems.append(current_semester)
+
+        for i in range(1, len(all_sems) + 1):
+            print(f'Semester {i}: ')
+            print("Course", '\t', "Credit")
+            for course, credit in all_sems[i-1]:
+                print(course, '\t', credit)
+            print()
+            print()
+
+
 
 if __name__ == "__main__":
     user = UserInteraction(4, "Computer Science", 120)
@@ -213,8 +246,10 @@ if __name__ == "__main__":
     user.ask_tech_electives()
     user.ask_already_taken_courses()
     user.ask_courses_want_to_take()
-    user.course_relationship()
+    user.ask_course_relationship()
     user.makeGraph()
-    print(user.g.adjacency_dict)
-    print(user.g.doTopologicalSort())
+    user.g.doTopologicalSort()
+    print(user.recommend_courses())
+    
+
 
