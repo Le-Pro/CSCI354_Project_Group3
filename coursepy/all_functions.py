@@ -7,6 +7,7 @@ class Graph:
 
     def __init__(self):
         """
+        A directed graph class made with an adjacency dictionary where the key-value pairs uses the following format 
         # {(AFRO-101, 3): {(AFRO 105, 2), (AFRO 102, 2)}}
             What this means is that the 3 credit course AFRO-101 is a prerequisite to AFRO 105
             and AFRO 102
