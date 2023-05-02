@@ -1,0 +1,29 @@
+Metadata-Version: 2.1
+Name: coursepy
+Version: 0.1.0
+Summary: A course organizer that lets students map their college courses
+Home-page: https://github.com/Le-Pro/CSCI354_Project_Group3
+Author: Hrishav Sapkota, Sameer Acharya, Victor Iyke-Osuji
+Author-email: hrishav.sapkota@bison.howard.edu, sameer.acharya@bison.howard.edu, victor.iykeosuji@bison.howard.edu
+License: MIT
+Description-Content-Type: text/markdown
+
+# Coursepy
+A package that lets students map their college courses.
+
+## How to use
+_Install the package by using this in the command-line:_ <br>
+```sh
+pip install coursepy
+```
+_After installing the package use following import:_ <br>
+
+```python
+from coursepy import speed_schedule, cost_v_credit
+```
+_Then use following commands as per your need:_
+
+```python
+speed_schedule()
+cost_v_credit()
+```
