@@ -1,6 +1,5 @@
 # from collections import deque
 import json
-from pulp import *
 import sys, os
 
 
