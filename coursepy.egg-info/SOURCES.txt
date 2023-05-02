@@ -1,0 +1,10 @@
+LICENSE.txt
+README.md
+setup.cfg
+setup.py
+coursepy/__init__.py
+coursepy/all_functions.py
+coursepy.egg-info/PKG-INFO
+coursepy.egg-info/SOURCES.txt
+coursepy.egg-info/dependency_links.txt
+coursepy.egg-info/top_level.txt
